@@ -1,0 +1,13 @@
+   Compiling to_string v0.1.0 (/Users/mkumar/rust-practice/rust_json_serialize_and_deser/to_string)
+error: unexpected closing delimiter: `]`
+   --> src/main.rs:109:9
+    |
+4   | fn main() {
+    |           - this delimiter might not be properly closed...
+...
+108 |           }
+    |           - ...as it matches this but it has different indentation
+109 |         ]
+    |         ^ unexpected closing delimiter
+
+error: could not compile `to_string` due to previous error

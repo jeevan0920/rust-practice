@@ -1,0 +1,14 @@
+[package]
+name = "hb_collector"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+bytes = "1"
+tokio = { version = "1", features = ["full"] }
+tokio-scgi = "0.2.4"
+tokio-util = { version = "0.6", features = ["codec"] }
+futures-util = {version = "0.3.30"}

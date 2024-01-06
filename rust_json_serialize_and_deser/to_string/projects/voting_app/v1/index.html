@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLA/MP Voting App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container mt-4">
+    <h1 class="text-center">MLA/MP Voting App</h1>
+
+    <!-- Candidate Login Form -->
+    <form id="candidateLoginForm">
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number:</label>
+        <input type="text" class="form-control" id="mobileNumber" required>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="candidateLogin()">Login</button>
+    </form>
+
+    <!-- Candidate Information Display -->
+    <div id="candidateInfo" class="mt-4" style="display:none;">
+      <h2>Candidate Information</h2>
+      <div id="candidateDetails"></div>
+    </div>
+
+    <!-- Vote Submission Form -->
+    <form id="voteForm" style="display:none;">
+      <h2 class="mt-4">Vote for Your Candidate</h2>
+      <div class="form-group">
+        <label for="candidateId">Select Candidate:</label>
+        <select class="form-control" id="candidateId" required></select>
+      </div>
+      <button type="button" class="btn btn-success" onclick="submitVote()">Submit Vote</button>
+    </form>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="scripts.js"></script>
+
+</body>
+</html>

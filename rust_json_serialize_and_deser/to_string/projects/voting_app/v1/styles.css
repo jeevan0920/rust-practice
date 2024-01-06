@@ -1,0 +1,67 @@
+/* styles.css */
+
+/* Body styling */
+body {
+    background-color: #f0f0f0; /* Light gray background */
+  }
+  
+  /* Container styling */
+  .container {
+    background-color: #ffffff; /* White container background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+  }
+  
+  /* Heading styling */
+  h1, h2 {
+    color: #3498db; /* Blue heading text */
+  }
+  
+  /* Form styling */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Button styling */
+  .btn {
+    background-color: #2ecc71; /* Green button background */
+    color: #ffffff; /* White button text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Input styling */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 5px;
+  }
+  
+  /* Display candidate information styling */
+  #candidateDetails {
+    margin-top: 10px;
+  }
+  
+  /* Select dropdown styling */
+  select.form-control {
+    width: 100%;
+  }
+  
+  /* Vote submission form styling */
+  #voteForm {
+    margin-top: 20px;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    /* Adjust styling for smaller screens if needed */
+    .container {
+      padding: 10px;
+    }
+  }
+  
