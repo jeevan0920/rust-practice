@@ -72,6 +72,8 @@ fn build_alias_map() -> Result<HashMap<String, String>, Error> {
 }
 
 fn alias_decode(mut json_body: &mut Value, alias_map: &HashMap<String, String>) {
+    println!("json_body: {:?}", json_body);
+
     // correcte the aliased data key
     if let Some(aliased_data) = alias_map.get("data") {
         if json_body[aliased_data].is_object() {
@@ -104,12 +106,59 @@ fn alias_decode(mut json_body: &mut Value, alias_map: &HashMap<String, String>) 
         }
     }
 
-    // recursively correct the aliased data value
+    // recursively correct the aliased data value's contextsjson
     if let Some(data_array) = json_body["data"].as_array_mut() {
         for obj in data_array {
             alias_decode(obj, alias_map);
         }
     }
+
+    // if there is co it will be a json string
+    // we have to convert it into a json object
+    // then json object will be an array of json objects
+    // we have recursively call the alias_decode for each json object
+    if let Some(co) = json_body["co"].as_str() {
+        if let Ok(mut co_json) = serde_json::from_str::<Value>(co) {
+            // call alias_decode for each json object
+            alias_decode(&mut co_json, alias_map);
+            // insert the corrected co_json string into the json_body
+            json_body["co"] = serde_json::to_value(co_json).unwrap();
+        }
+    }
+
+    // if there is a ue_pr it will be a json string
+    // we have to convert it into a json object
+    // then json object will be a json object
+    // we have to call the alias_decode for the json object
+    if let Some(ue_pr) = json_body["ue_pr"].as_str() {
+        if let Ok(mut ue_pr_json) = serde_json::from_str::<Value>(ue_pr) {
+            // call alias_decode for the json object
+            alias_decode(&mut ue_pr_json, alias_map);
+            // insert the corrected ue_pr_json string into the json_body
+            json_body["ue_pr"] = serde_json::to_value(ue_pr_json).unwrap();
+        }
+    }
+
+    // let contexts_jn: Value = serde_json::from_str(&json_body["data"]["co"].to_string()).unwrap();
+    // println!("======================= contexts json ======================");
+    // println!("contexts_jn: {:#?}", json_body["data"][0]["co"]);
+    // println!("===========================================================");
+    // let json_str = json_body["data"][0]["co"].clone();
+    // let mut contexts_jn: Value = serde_json::from_str(json_str.as_str().unwrap()).unwrap();
+    // println!("contexts_jn json : {:#?}", contexts_jn);
+    // println!("===========================================================");
+
+    // let json_str = json_body["data"][0]["co"].clone();
+    // let mut contexts_jn: Value = serde_json::from_str(json_str.as_str().unwrap()).unwrap();
+
+    // // recursively correct the aliased data value's contextsjson
+    // if let Some(data_array) = contexts_jn["data"].as_array_mut() {
+    //     for obj in data_array {
+    //         alias_decode(obj, alias_map);
+    //     }
+    // }
+
+    println!("after alias_decode: {:#?}", json_body);
 }
 
 fn decode_aliased_payload(alias_map: &HashMap<String, String>, payload: &str) -> Value {
