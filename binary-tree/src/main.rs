@@ -1,7 +1,7 @@
-use std::sync::Arc;
 use colored_json::ToColoredJson;
-use serde::{Serialize, Serializer, ser::SerializeStruct};
+use serde::{ser::SerializeStruct, Serialize, Serializer};
 use serde_json::json;
+use std::sync::Arc;
 
 #[derive(Debug)]
 pub struct Node {
@@ -41,11 +41,6 @@ impl Serialize for Node {
     }
 }
 
-
-
-
-
-
 pub fn main() {
     let mut node = Node {
         val: 1,
@@ -57,7 +52,7 @@ pub fn main() {
         val: 2,
         left: None,
         right: None,
-    };    
+    };
 
     let mut right_node = Node {
         val: 3,
@@ -68,7 +63,7 @@ pub fn main() {
     // node.left = Arc::new(Some(left_node));
     // node.right = Arc::new(Some(right_node));
     // println!("{:?}", node);
-    
+
     let left_left_node = Node {
         val: 4,
         left: None,
@@ -90,4 +85,3 @@ pub fn main() {
     println!("{:#?}", json_data);
     // println!("{:#?}", node);
 }
-
