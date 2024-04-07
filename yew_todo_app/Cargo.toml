@@ -1,12 +1,13 @@
 [package]
-name = "schema-alias-map-builder"
+name = "yew_todo_app"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+crate-type = ["cdylib", "rlib"]
+
 [dependencies]
-serde = { version = "1.0.197", features = ["derive"] }
-serde_json = "1.0.114"
-base64 = "0.22.0"
-log = "0.4.21"
+yew = "0.18"
+wasm-bindgen = "0.2"

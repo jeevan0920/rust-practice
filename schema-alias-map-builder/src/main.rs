@@ -1,6 +1,7 @@
 use base64::engine::general_purpose;
 use base64::Engine;
-use serde_json::Value;
+use log::error;
+use serde_json::{error, Value};
 use std::collections::{HashMap, HashSet};
 use std::fmt::Error;
 use std::fs::File;
@@ -15,6 +16,7 @@ fn is_bijective_map(map: &HashMap<String, String>) -> bool {
         if !value_set.insert(value) {
             // If the value was already in the set, it's not bijective
             // TODO: print the error log here
+            error!("Alias value {} is not unique", value);
             return false;
         }
     }
@@ -45,7 +47,11 @@ fn build_alias_map() -> Result<HashMap<String, String>, Error> {
         let line = match line {
             Ok(line) => line,
             Err(e) => {
-                panic!("Failed to read line: {}", e);
+                panic!(
+                    "Failed to read line: {} in alias map file: {}",
+                    e,
+                    std::env::var("ALIAS_MAP_PATH").unwrap()
+                );
             }
         };
 
@@ -55,12 +61,16 @@ fn build_alias_map() -> Result<HashMap<String, String>, Error> {
             // Insert key-value pair into the HashMap
             hashmap.insert(parts[0].trim().to_string(), parts[1].trim().to_string());
         } else {
-            println!("Invalid line: {}", line);
+            println!(
+                "Invalid line: {} in alias map file {}",
+                line,
+                std::env::var("ALIAS_MAP_PATH").unwrap()
+            );
         }
     }
 
     if !is_bijective_map(&hashmap) {
-        panic!("Mapping is not bijective");
+        panic!("Alias mapping is not bijective");
     }
 
     // Print the HashMap
@@ -126,6 +136,15 @@ fn alias_decode(mut json_body: &mut Value, alias_map: &HashMap<String, String>) 
         }
     }
 
+    // if there is a cx field it will be a base64 encoded
+    // json string so we have to convert it into a json object
+    // then json object will be an array of json objects
+    // we have recursively call the alias_decode for each json object
+    if let Some(cx) = json_body["cx"].as_str() {
+        // decode the base64 encoded string
+        todo!()
+    }
+
     // if there is a ue_pr it will be a json string
     // we have to convert it into a json object
     // then json object will be a json object
@@ -138,6 +157,15 @@ fn alias_decode(mut json_body: &mut Value, alias_map: &HashMap<String, String>) 
             json_body["ue_pr"] =
                 serde_json::Value::String(serde_json::to_string(&ue_pr_json).unwrap());
         }
+    }
+
+    // if there is a ue_px it will be a base64 encoded
+    // json string so we have to convert it into a json object
+    // then json object will be a json object
+    // we have to call the alias_decode for the json object
+    if let Some(ue_px) = json_body["ue_px"].as_str() {
+        // decode the base64 encoded string
+        todo!()
     }
 
     println!("after alias_decode: {:#?}", json_body);

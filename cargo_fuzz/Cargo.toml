@@ -1,0 +1,27 @@
+[package]
+name = "fuzz_testing"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Add the dependencies for your project here.
+libfuzzer-sys = "0.4"
+
+[profile.release]
+# Optimize the release build.
+opt-level = "z"
+
+[lib]
+# Define the library name if you have one.
+name = "fuzz_testing"
+path = "src/lib.rs"
+
+[[bin]]
+# Define the binary name for your fuzz target.
+name = "fuzz_target"
+path = "src/fuzz_target.rs"
+
+[dev-dependencies]
+# Add the `cargo-fuzz` dependencies here.
+cargo-fuzz = "0.10"
+
