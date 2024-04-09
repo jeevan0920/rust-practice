@@ -1,0 +1,93 @@
+    Checking rust-web-map v0.1.0 (/Users/mkumar/rust-practice/rust-web-map)
+error[E0432]: unresolved import `crate::schema::users`
+  --> src/db.rs:14:9
+   |
+14 |     use crate::schema::users;
+   |         ^^^^^^^^^^^^^^^^^^^^ no `users` in `schema`
+
+error[E0432]: unresolved import `crate::schema::users`
+ --> src/models.rs:1:5
+  |
+1 | use crate::schema::users;
+  |     ^^^^^^^^^^^^^^^^^^^^ no `users` in `schema`
+
+error: cannot find macro `__diesel_parse_table` in this scope
+  --> src/schema.rs:3:1
+   |
+3  | / diesel::table! {
+4  | |     locations (id) {
+5  | |         id -> Int4,
+6  | |         name -> Varchar,
+...  |
+11 | |     }
+12 | | }
+   | |_^
+   |
+   = note: this error originates in the macro `diesel::table` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: cannot find macro `__diesel_parse_table` in this scope
+  --> src/schema.rs:14:1
+   |
+14 | / diesel::table! {
+15 | |     users (id) {
+16 | |         id -> Int4,
+17 | |         username -> Varchar,
+18 | |         password_hash -> Varchar,
+19 | |     }
+20 | | }
+   | |_^
+   |
+   = note: this error originates in the macro `diesel::table` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: cannot find macro `joinable_inner` in this scope
+  --> src/schema.rs:22:1
+   |
+22 | diesel::joinable!(locations -> users (user_id));
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this error originates in the macro `diesel::joinable` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: cannot find macro `allow_tables_to_appear_in_same_query` in this scope
+  --> src/schema.rs:24:1
+   |
+24 | diesel::allow_tables_to_appear_in_same_query!(locations, users,);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this error originates in the macro `diesel::allow_tables_to_appear_in_same_query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unused import: `web`
+ --> src/main.rs:1:17
+  |
+1 | use actix_web::{web, App, HttpServer};
+  |                 ^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `web`
+ --> src/auth.rs:2:38
+  |
+2 | use actix_web::{dev::ServiceRequest, web, HttpResponse};
+  |                                      ^^^
+
+warning: unused import: `std::env`
+ --> src/auth.rs:5:5
+  |
+5 | use std::env;
+  |     ^^^^^^^^
+
+error[E0433]: failed to resolve: use of undeclared crate or module `locations`
+  --> src/schema.rs:24:47
+   |
+24 | diesel::allow_tables_to_appear_in_same_query!(locations, users,);
+   |                                               ^^^^^^^^^ use of undeclared crate or module `locations`
+
+error[E0433]: failed to resolve: use of undeclared crate or module `users`
+  --> src/schema.rs:24:58
+   |
+24 | diesel::allow_tables_to_appear_in_same_query!(locations, users,);
+   |                                                          ^^^^^ use of undeclared crate or module `users`
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+warning: `rust-web-map` (bin "rust-web-map") generated 3 warnings
+error: could not compile `rust-web-map` (bin "rust-web-map") due to 9 previous errors; 3 warnings emitted
