@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-info-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpu-info
+  template:
+    metadata:
+      labels:
+        app: cpu-info
+    spec:
+      containers:
+        - name: cpu-info
+          image: jeevan0921/input:cpu-info  # Use localhost tag
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "4"
+              memory: "4Gi"
