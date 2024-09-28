@@ -85,3 +85,14 @@ pub fn main() {
     println!("{:#?}", json_data);
     // println!("{:#?}", node);
 }
+
+// add a simple example test basic addition
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_addition() {
+        assert_eq!(2 + 2, 4);
+    }
+}
